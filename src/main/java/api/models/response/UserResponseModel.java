@@ -1,7 +1,6 @@
 package api.models.response;
 
 public class UserResponseModel {
-
     public UserModel user;
     public boolean success;
     public String accessToken;
