@@ -14,7 +14,7 @@ public class AuthorizationPage {
         this.driver = driver;
     }
 
-    private final By authLoginBtnText = By.xpath(".//button[contains(text(),'Войти')]");
+    private final By authLoginBtn = By.xpath(".//button[contains(text(),'Войти')]");
     private final By authRegistrationBtn = By.xpath(".//a[contains(text(),'Зарегистрироваться')]");
     private final By authRestorePassword = By.xpath(".//a[contains(text(),'Восстановить пароль')]");
     private final By authEmail = By.xpath(
@@ -26,10 +26,20 @@ public class AuthorizationPage {
         driver.findElement(authRegistrationBtn).click();
     }
 
-    public String getTextAuthForm(){
+    public void clickToRestoreBtn(){
+        driver.findElement(authRestorePassword).click();
+    }
+
+    public void getAuthorization(String email, String password){
+        driver.findElement(authEmail).sendKeys(email);
+        driver.findElement(authPassword).sendKeys(password);
+        driver.findElement(authLoginBtn).click();
+    }
+
+    public String getTextAuthLoginBtn(){
         new WebDriverWait(driver, 3)
-                .until(ExpectedConditions.visibilityOfElementLocated(authLoginBtnText));
-        WebElement element = driver.findElement(authLoginBtnText);
+                .until(ExpectedConditions.visibilityOfElementLocated(authLoginBtn));
+        WebElement element = driver.findElement(authLoginBtn);
         return element.getText();
     }
 }

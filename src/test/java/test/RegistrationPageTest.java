@@ -78,14 +78,13 @@ public class RegistrationPageTest {
 
         getUserDelete(responseLogin.getAccessToken());
 
-        Assert.assertEquals("Войти", authorization.getTextAuthForm());
+        Assert.assertEquals("Войти", authorization.getTextAuthLoginBtn());
     }
 
     @Test
     @DisplayName("Регистрация пользователя - некорректный пароль")
     public void checkUnValidRegistration() {
-        driver = new ChromeDriver();
-        driver.get("https://stellarburgers.nomoreparties.site");
+        getStarted();
 
         MainPage mainPage = new MainPage(driver);
         mainPage.waitLoadMainPages();

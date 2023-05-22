@@ -12,5 +12,7 @@ public class RestorePage {
 
     private final By restoreLoginBtn = By.xpath(".//a[contains(text(),'Войти')]");
 
-
+    public void clickToLoginBtn(){
+        driver.findElement(restoreLoginBtn).click();
+    }
 }

@@ -30,6 +30,10 @@ public class RegistrationPage {
         return element.getText();
     }
 
+    public void clickToLoginBtn(){
+        driver.findElement(registrationLoginBtn).click();
+    }
+
     public void getRegistration(String name, String email, String password){
         driver.findElement(registrationFields(1)).sendKeys(name);
         driver.findElement(registrationFields(2)).sendKeys(email);
