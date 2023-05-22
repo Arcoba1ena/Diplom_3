@@ -9,6 +9,7 @@ public class Locators {
      * @param mainPageLoginBtn        - .//button[contains(text(),'Войти в аккаунт')]
      * @param mainPageLogo            - .//div[@class='AppHeader_header__logo__2D0X2']/a
      * @param mainPageConstructors    - .//span[contains(text(),'%s')]
+     * @param mainPageCheckoutBtn     - .//button[contains(text(),'Оформить заказ')]
      */
 
     /**
@@ -35,6 +36,9 @@ public class Locators {
 
     /**
      * Личный кабинет:
-     * @param personalAreaExitBtn - .//button[contains(text(),'Выход')]
+     * @param personalAreaProfileBtn     - .//a[contains(text(),'Профиль')]
+     * @param personalAreaExitBtn        - .//button[contains(text(),'Выход')]
+     * @param personalAreaConstructorBtn - .//p[contains(text(),'Конструктор')]
+     * @param personalAreaLogoBtn        - .//div[@class='AppHeader_header__logo__2D0X2']
      */
 }

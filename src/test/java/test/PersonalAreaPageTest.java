@@ -18,16 +18,16 @@ import org.junit.runners.Parameterized.Parameters;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
+import org.openqa.selenium.support.ui.WebDriverWait;
 import ui.pages.MainPage;
+import ui.pages.PersonalAreaPage;
 import ui.pages.AuthorizationPage;
-import ui.pages.RegistrationPage;
-import ui.pages.RestorePage;
 
 import static api.functions.Util.deserialize;
 import static api.functions.UserDeleteFunctions.getUserDelete;
 
 @RunWith(Parameterized.class)
-public class AuthorizationPageTest {
+public class PersonalAreaPageTest {
 
     @Before
     public void setConfig() {
@@ -43,7 +43,7 @@ public class AuthorizationPageTest {
     private final String email;
     private final String password;
 
-    public AuthorizationPageTest(String name, String email, String password) {
+    public PersonalAreaPageTest(String name, String email, String password) {
         this.name = name;
         this.email = email;
         this.password = password;
@@ -69,23 +69,8 @@ public class AuthorizationPageTest {
     }
 
     @Test
-    @DisplayName("Авторизация пользователя - вход по кнопке «Войти в аккаунт» на главной")
-    public void checkLoginFromMainPage() {
-        getStarted();
-
-        MainPage mainPage = new MainPage(driver);
-        mainPage.waitLoadMainPages();
-        mainPage.clickToLoginBtn();
-
-        AuthorizationPage authorization = new AuthorizationPage(driver);
-        authorization.getAuthorization(email, password);
-
-        Assert.assertEquals("Оформить заказ", mainPage.getTextAuthCheckoutBtn());
-    }
-
-    @Test
-    @DisplayName("Авторизация пользователя - вход через кнопку «Личный кабинет»")
-    public void checkLoginFromPersonalAreaPage() {
+    @DisplayName("Переход в личный кабинет - переход по клику на «Личный кабинет»")
+    public void checkPersonalAreaForm() {
         getStarted();
 
         MainPage mainPage = new MainPage(driver);
@@ -94,48 +79,67 @@ public class AuthorizationPageTest {
 
         AuthorizationPage authorization = new AuthorizationPage(driver);
         authorization.getAuthorization(email, password);
+        mainPage.clickToPersonalAreaBtn();
 
-        Assert.assertEquals("Оформить заказ", mainPage.getTextAuthCheckoutBtn());
+        PersonalAreaPage personalArea = new PersonalAreaPage(driver);
+        Assert.assertEquals("Профиль",  personalArea.personalAreaProfileBtn());
     }
 
     @Test
-    @DisplayName("Авторизация пользователя - вход через кнопку в форме регистрации")
-    public void checkLoginFromRegistrationForm() {
+    @DisplayName("Переход в личный кабинет - по кнопке конструктор")
+    public void checkPersonalAreaFromConstructor() {
         getStarted();
 
         MainPage mainPage = new MainPage(driver);
         mainPage.waitLoadMainPages();
-        mainPage.clickToLoginBtn();
+        mainPage.clickToPersonalAreaBtn();
 
         AuthorizationPage authorization = new AuthorizationPage(driver);
-        authorization.clickToRegistrationBtn();
-
-        RegistrationPage registration = new RegistrationPage(driver);
-        registration.clickToLoginBtn();
-
         authorization.getAuthorization(email, password);
+        mainPage.clickToPersonalAreaBtn();
 
-        Assert.assertEquals("Оформить заказ", mainPage.getTextAuthCheckoutBtn());
+        PersonalAreaPage personalArea = new PersonalAreaPage(driver);
+        personalArea.clickToConstructorBtn();
+
+        Assert.assertEquals("Соберите бургер", mainPage.getTextHeaderConstructor());
     }
 
     @Test
-    @DisplayName("Авторизация пользователя - вход через кнопку в форме восстановления пароля.")
-    public void checkLoginFromRestoreForm() {
+    @DisplayName("Переход в личный кабинет - по нажатию на логотип")
+    public void checkPersonalAreaFormLogo() {
         getStarted();
 
         MainPage mainPage = new MainPage(driver);
         mainPage.waitLoadMainPages();
-        mainPage.clickToLoginBtn();
+        mainPage.clickToPersonalAreaBtn();
 
         AuthorizationPage authorization = new AuthorizationPage(driver);
-        authorization.clickToRestoreBtn();
-
-        RestorePage restorePage = new RestorePage(driver);
-        restorePage.clickToLoginBtn();
-
         authorization.getAuthorization(email, password);
+        mainPage.clickToPersonalAreaBtn();
 
-        Assert.assertEquals("Оформить заказ", mainPage.getTextAuthCheckoutBtn());
+        PersonalAreaPage personalArea = new PersonalAreaPage(driver);
+        personalArea.clickToLogoBtn();
+
+        Assert.assertEquals("Соберите бургер", mainPage.getTextHeaderConstructor());
+    }
+
+    @Test
+    @DisplayName("Переход в личный кабинет - нажатие на кнопку Выход")
+    public void checkPersonalAreaSignOut() {
+        getStarted();
+
+        MainPage mainPage = new MainPage(driver);
+        mainPage.waitLoadMainPages();
+        mainPage.clickToPersonalAreaBtn();
+
+        AuthorizationPage authorization = new AuthorizationPage(driver);
+        authorization.getAuthorization(email, password);
+        mainPage.clickToPersonalAreaBtn();
+
+        PersonalAreaPage personalArea = new PersonalAreaPage(driver);
+        personalArea.clickToSignOut();
+
+        Assert.assertEquals("Войти", authorization.getTextAuthLoginBtn());
     }
 
     @After
