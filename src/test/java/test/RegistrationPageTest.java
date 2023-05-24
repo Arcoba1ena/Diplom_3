@@ -39,6 +39,8 @@ public class RegistrationPageTest {
     private final String email;
     private final String password;
 
+    private final String URL = "https://stellarburgers.nomoreparties.site";
+
     public RegistrationPageTest(String name, String email, String password) {
         this.name = name;
         this.email = email;
@@ -54,7 +56,7 @@ public class RegistrationPageTest {
 
     public void getStarted() {
         driver = new ChromeDriver();
-        driver.get("https://stellarburgers.nomoreparties.site");
+        driver.get(URL);
     }
 
     @Test

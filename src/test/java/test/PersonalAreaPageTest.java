@@ -43,6 +43,8 @@ public class PersonalAreaPageTest {
     private final String email;
     private final String password;
 
+    private final String URL = "https://stellarburgers.nomoreparties.site";
+
     public PersonalAreaPageTest(String name, String email, String password) {
         this.name = name;
         this.email = email;
@@ -58,7 +60,7 @@ public class PersonalAreaPageTest {
 
     public void getStarted() {
         driver = new ChromeDriver();
-        driver.get("https://stellarburgers.nomoreparties.site");
+        driver.get(URL);
     }
 
     private UserResponseModel response;

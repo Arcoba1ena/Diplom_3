@@ -32,16 +32,18 @@ public class AuthorizationPageTest {
     @Before
     public void setConfig() {
         WebDriverManager.chromedriver().setup();
+        getStarted();
         Request request = new Request();
         request.apiEndPoint();
         getCreateUser();
     }
 
     private WebDriver driver;
-
     private final String name;
     private final String email;
     private final String password;
+
+    private final String URL = "https://stellarburgers.nomoreparties.site";
 
     public AuthorizationPageTest(String name, String email, String password) {
         this.name = name;
@@ -58,7 +60,7 @@ public class AuthorizationPageTest {
 
     public void getStarted() {
         driver = new ChromeDriver();
-        driver.get("https://stellarburgers.nomoreparties.site");
+        driver.get(URL);
     }
 
     private UserResponseModel response;
@@ -71,8 +73,6 @@ public class AuthorizationPageTest {
     @Test
     @DisplayName("Авторизация пользователя - вход по кнопке «Войти в аккаунт» на главной")
     public void checkLoginFromMainPage() {
-        getStarted();
-
         MainPage mainPage = new MainPage(driver);
         mainPage.waitLoadMainPages();
         mainPage.clickToLoginBtn();
@@ -86,8 +86,6 @@ public class AuthorizationPageTest {
     @Test
     @DisplayName("Авторизация пользователя - вход через кнопку «Личный кабинет»")
     public void checkLoginFromPersonalAreaPage() {
-        getStarted();
-
         MainPage mainPage = new MainPage(driver);
         mainPage.waitLoadMainPages();
         mainPage.clickToPersonalAreaBtn();
@@ -101,8 +99,6 @@ public class AuthorizationPageTest {
     @Test
     @DisplayName("Авторизация пользователя - вход через кнопку в форме регистрации")
     public void checkLoginFromRegistrationForm() {
-        getStarted();
-
         MainPage mainPage = new MainPage(driver);
         mainPage.waitLoadMainPages();
         mainPage.clickToLoginBtn();
@@ -121,8 +117,6 @@ public class AuthorizationPageTest {
     @Test
     @DisplayName("Авторизация пользователя - вход через кнопку в форме восстановления пароля.")
     public void checkLoginFromRestoreForm() {
-        getStarted();
-
         MainPage mainPage = new MainPage(driver);
         mainPage.waitLoadMainPages();
         mainPage.clickToLoginBtn();

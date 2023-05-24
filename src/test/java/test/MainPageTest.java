@@ -20,6 +20,8 @@ public class MainPageTest {
     private final String nameFirst;
     private final String nameSecond;
 
+    private final String URL = "https://stellarburgers.nomoreparties.site";
+
     public MainPageTest(String nameFirst, String nameSecond) {
         this.nameFirst = nameFirst;
         this.nameSecond = nameSecond;
@@ -43,7 +45,7 @@ public class MainPageTest {
 
     public void getStarted() {
         driver = new ChromeDriver();
-        driver.get("https://stellarburgers.nomoreparties.site");
+        driver.get(URL);
     }
 
     @Test
