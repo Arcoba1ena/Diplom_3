@@ -14,19 +14,16 @@ public class MainPage {
         this.driver = driver;
     }
 
-    private final By mainPageConstructorBtn = By.xpath(".//p[contains(text(),'Конструктор')]");
     private final By mainPagePersonalArea = By.xpath(".//p[contains(text(),'Личный Кабинет')]");
     private final By mainPageLogo = By.xpath(".//div[@class='AppHeader_header__logo__2D0X2']/a");
     private final By mainPageLoginBtn = By.xpath(".//button[contains(text(),'Войти в аккаунт')]");
     private final By mainPageCheckoutBtn = By.xpath(".//button[contains(text(),'Оформить заказ')]");
     private final By mainPageConstructorText = By.xpath(".//h1[contains(text(),'Соберите бургер')]");
+    private final By mainPageCategoriesText = By.xpath(
+            ".//div[@class='tab_tab__1SPyG tab_tab_type_current__2BEPc pt-4 pr-10 pb-4 pl-10 noselect']");
 
     private By getMainPageConstructors(String categories) {
         return By.xpath(String.format(".//span[contains(text(),'%s')]", categories));
-    }
-
-    private By getMainPageResultHeader(String categories) {
-        return By.xpath(String.format(".//h2[contains(text(),'%s')]", categories));
     }
 
     public void waitLoadMainPages(){
@@ -41,15 +38,8 @@ public class MainPage {
         driver.findElement(mainPagePersonalArea).click();
     }
 
-    public void selectConstructor(String categories){
+    public void selectCategories(String categories){
         driver.findElement(getMainPageConstructors(categories)).click();
-    }
-
-    public String getConstructorResultHeader(String categories){
-        new WebDriverWait(driver, 3)
-                .until(ExpectedConditions.visibilityOfElementLocated(getMainPageResultHeader(categories)));
-        WebElement element = driver.findElement(getMainPageResultHeader(categories));
-        return element.getText();
     }
 
     public String getTextAuthCheckoutBtn(){
@@ -63,6 +53,13 @@ public class MainPage {
         new WebDriverWait(driver, 3)
                 .until(ExpectedConditions.visibilityOfElementLocated(mainPageConstructorText));
         WebElement element = driver.findElement(mainPageConstructorText);
+        return element.getText();
+    }
+
+    public String getTextNoActiveCategories(){
+        new WebDriverWait(driver, 3)
+                .until(ExpectedConditions.visibilityOfElementLocated(mainPageCategoriesText));
+        WebElement element = driver.findElement(mainPageCategoriesText);
         return element.getText();
     }
 }
