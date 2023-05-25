@@ -18,10 +18,11 @@ import org.junit.runners.Parameterized.Parameters;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
-import org.openqa.selenium.support.ui.WebDriverWait;
 import ui.pages.MainPage;
 import ui.pages.PersonalAreaPage;
 import ui.pages.AuthorizationPage;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.ie.InternetExplorerDriver;
 
 import static api.functions.Util.deserialize;
 import static api.functions.UserDeleteFunctions.getUserDelete;
@@ -31,7 +32,7 @@ public class PersonalAreaPageTest {
 
     @Before
     public void setConfig() {
-        WebDriverManager.chromedriver().setup();
+        getStarted("chrome");
         Request request = new Request();
         request.apiEndPoint();
         getCreateUser();
@@ -58,8 +59,19 @@ public class PersonalAreaPageTest {
         };
     }
 
-    public void getStarted() {
-        driver = new ChromeDriver();
+    public void getStarted(String browserName) {
+        if(browserName.equalsIgnoreCase("chrome")) {
+            WebDriverManager.chromedriver().setup();
+            driver = new ChromeDriver();
+        } else if(browserName.equalsIgnoreCase("firefox")) {
+            WebDriverManager.firefoxdriver().setup();
+            driver = new FirefoxDriver();
+        } else if(browserName.equalsIgnoreCase("ie")) {
+            WebDriverManager.iedriver().setup();
+            driver = new InternetExplorerDriver();
+        } else {
+            throw new IllegalArgumentException("Invalid browser name: " + browserName);
+        }
         driver.get(URL);
     }
 
@@ -73,8 +85,6 @@ public class PersonalAreaPageTest {
     @Test
     @DisplayName("Переход в личный кабинет - переход по клику на «Личный кабинет»")
     public void checkPersonalAreaForm() {
-        getStarted();
-
         MainPage mainPage = new MainPage(driver);
         mainPage.waitLoadMainPages();
         mainPage.clickToPersonalAreaBtn();
@@ -90,8 +100,6 @@ public class PersonalAreaPageTest {
     @Test
     @DisplayName("Переход в личный кабинет - по кнопке конструктор")
     public void checkPersonalAreaFromConstructor() {
-        getStarted();
-
         MainPage mainPage = new MainPage(driver);
         mainPage.waitLoadMainPages();
         mainPage.clickToPersonalAreaBtn();
@@ -109,8 +117,6 @@ public class PersonalAreaPageTest {
     @Test
     @DisplayName("Переход в личный кабинет - по нажатию на логотип")
     public void checkPersonalAreaFormLogo() {
-        getStarted();
-
         MainPage mainPage = new MainPage(driver);
         mainPage.waitLoadMainPages();
         mainPage.clickToPersonalAreaBtn();
@@ -128,8 +134,6 @@ public class PersonalAreaPageTest {
     @Test
     @DisplayName("Переход в личный кабинет - нажатие на кнопку Выход")
     public void checkPersonalAreaSignOut() {
-        getStarted();
-
         MainPage mainPage = new MainPage(driver);
         mainPage.waitLoadMainPages();
         mainPage.clickToPersonalAreaBtn();

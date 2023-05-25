@@ -17,6 +17,8 @@ import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 import org.openqa.selenium.chrome.ChromeDriver;
 
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.ie.InternetExplorerDriver;
 import ui.pages.MainPage;
 import ui.pages.RegistrationPage;
 import ui.pages.AuthorizationPage;
@@ -29,7 +31,7 @@ public class RegistrationPageTest {
 
     @Before
     public void setConfig() {
-        WebDriverManager.chromedriver().setup();
+        getStarted("chrome");
         Request request = new Request();
         request.apiEndPoint();
     }
@@ -54,16 +56,25 @@ public class RegistrationPageTest {
         };
     }
 
-    public void getStarted() {
-        driver = new ChromeDriver();
+    public void getStarted(String browserName) {
+        if(browserName.equalsIgnoreCase("chrome")) {
+            WebDriverManager.chromedriver().setup();
+            driver = new ChromeDriver();
+        } else if(browserName.equalsIgnoreCase("firefox")) {
+            WebDriverManager.firefoxdriver().setup();
+            driver = new FirefoxDriver();
+        } else if(browserName.equalsIgnoreCase("ie")) {
+            WebDriverManager.iedriver().setup();
+            driver = new InternetExplorerDriver();
+        } else {
+            throw new IllegalArgumentException("Invalid browser name: " + browserName);
+        }
         driver.get(URL);
     }
 
     @Test
     @DisplayName("Регистрация пользователя - позитивный сценарий")
     public void checkRegistration() {
-        getStarted();
-
         MainPage mainPage = new MainPage(driver);
         mainPage.waitLoadMainPages();
         mainPage.clickToLoginBtn();
@@ -86,8 +97,6 @@ public class RegistrationPageTest {
     @Test
     @DisplayName("Регистрация пользователя - некорректный пароль")
     public void checkUnValidRegistration() {
-        getStarted();
-
         MainPage mainPage = new MainPage(driver);
         mainPage.waitLoadMainPages();
         mainPage.clickToLoginBtn();

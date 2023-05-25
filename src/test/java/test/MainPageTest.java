@@ -6,6 +6,8 @@ import org.junit.runners.Parameterized;
 import io.qameta.allure.junit4.DisplayName;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.runners.Parameterized.Parameters;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.ie.InternetExplorerDriver;
 
 import org.junit.Test;
 import org.junit.After;
@@ -39,14 +41,24 @@ public class MainPageTest {
 
     @Before
     public void setConfig() {
-        WebDriverManager.chromedriver().setup();
-        getStarted();
+        getStarted("chrome");
     }
 
     private WebDriver driver;
 
-    public void getStarted() {
-        driver = new ChromeDriver();
+    public void getStarted(String browserName) {
+        if(browserName.equalsIgnoreCase("chrome")) {
+            WebDriverManager.chromedriver().setup();
+            driver = new ChromeDriver();
+        } else if(browserName.equalsIgnoreCase("firefox")) {
+            WebDriverManager.firefoxdriver().setup();
+            driver = new FirefoxDriver();
+        } else if(browserName.equalsIgnoreCase("ie")) {
+            WebDriverManager.iedriver().setup();
+            driver = new InternetExplorerDriver();
+        } else {
+            throw new IllegalArgumentException("Invalid browser name: " + browserName);
+        }
         driver.get(URL);
     }
 

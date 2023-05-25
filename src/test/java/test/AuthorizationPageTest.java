@@ -18,10 +18,13 @@ import org.junit.runners.Parameterized.Parameters;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.ie.InternetExplorerDriver;
+
 import ui.pages.MainPage;
+import ui.pages.RestorePage;
 import ui.pages.AuthorizationPage;
 import ui.pages.RegistrationPage;
-import ui.pages.RestorePage;
 
 import static api.functions.Util.deserialize;
 import static api.functions.UserDeleteFunctions.getUserDelete;
@@ -31,8 +34,7 @@ public class AuthorizationPageTest {
 
     @Before
     public void setConfig() {
-        WebDriverManager.chromedriver().setup();
-        getStarted();
+        getStarted("chrome");
         Request request = new Request();
         request.apiEndPoint();
         getCreateUser();
@@ -58,8 +60,19 @@ public class AuthorizationPageTest {
         };
     }
 
-    public void getStarted() {
-        driver = new ChromeDriver();
+    public void getStarted(String browserName) {
+        if(browserName.equalsIgnoreCase("chrome")) {
+            WebDriverManager.chromedriver().setup();
+            driver = new ChromeDriver();
+        } else if(browserName.equalsIgnoreCase("firefox")) {
+            WebDriverManager.firefoxdriver().setup();
+            driver = new FirefoxDriver();
+        } else if(browserName.equalsIgnoreCase("ie")) {
+            WebDriverManager.iedriver().setup();
+            driver = new InternetExplorerDriver();
+        } else {
+            throw new IllegalArgumentException("Invalid browser name: " + browserName);
+        }
         driver.get(URL);
     }
 
