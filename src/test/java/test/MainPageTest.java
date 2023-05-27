@@ -63,14 +63,36 @@ public class MainPageTest {
     }
 
     @Test
-    @DisplayName("Раздел «Конструктор» - переход по клику на категорию")
+    @DisplayName("Раздел «Конструктор» - переход в раздел «Булки»")
     public void checkConstructor() {
         MainPage mainPage = new MainPage(driver);
         mainPage.waitLoadMainPages();
         mainPage.selectCategories(filling);
         mainPage.selectCategories(sauce);
         mainPage.selectCategories(buns);
-        Assert.assertEquals("Булки", mainPage.getTextNoActiveCategories());
+        Assert.assertEquals(buns, mainPage.getTextNoActiveCategories());
+    }
+
+    @Test
+    @DisplayName("Раздел «Конструктор» - переход в раздел «Соусы»")
+    public void checkConstructorSauce(){
+        MainPage mainPage = new MainPage(driver);
+        mainPage.waitLoadMainPages();
+        mainPage.selectCategories(filling);
+        mainPage.selectCategories(buns);
+        mainPage.selectCategories(sauce);
+        Assert.assertEquals(sauce, mainPage.getTextNoActiveCategories());
+    }
+
+    @Test
+    @DisplayName("Раздел «Конструктор» - переход в раздел «Начинки»")
+    public void checkConstructorBuns(){
+        MainPage mainPage = new MainPage(driver);
+        mainPage.waitLoadMainPages();
+        mainPage.selectCategories(sauce);
+        mainPage.selectCategories(buns);
+        mainPage.selectCategories(filling);
+        Assert.assertEquals(filling, mainPage.getTextNoActiveCategories());
     }
 
     @After
